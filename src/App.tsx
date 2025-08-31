@@ -1,4 +1,4 @@
-import { Container, InputText } from "./components";
+import { Container, InputCheckbox, InputText } from "./components";
 import SearchIcon from "./assets/icons/search.svg?react"
 
 export default function App() {
@@ -7,6 +7,7 @@ export default function App() {
 			Initial Commit
 
 			<InputText icon={SearchIcon} placeholder="Buscar Fotos" />
+			<InputCheckbox />
 		</Container>
 	);
 }
