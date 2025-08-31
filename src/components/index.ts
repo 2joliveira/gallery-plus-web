@@ -7,6 +7,7 @@ import Container from "./container";
 import Divider from "./divider";
 import Icon from "./icon";
 import InputCheckbox from "./input-checkbox";
+import InputSingleFile from "./input-single-file";
 import InputText from "./input-text";
 import Skeleton from "./skeleton";
 import Text from "./text";
@@ -21,6 +22,7 @@ export {
   Divider,
   Icon,
   InputCheckbox,
+  InputSingleFile,
   InputText,
   Skeleton,
   Text,
