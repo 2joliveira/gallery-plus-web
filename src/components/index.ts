@@ -1,31 +1,18 @@
-import Alert from "./alert";
-import Badge from "./badge";
-import ButtonIcon from "./button-icon";
-import Button from "./button";
-import Card from "./card";
-import Container from "./container";
-import Divider from "./divider";
-import { ImageFilePreview } from "./image-file-preview";
-import Icon from "./icon";
-import InputCheckbox from "./input-checkbox";
-import InputSingleFile from "./input-single-file";
-import InputText from "./input-text";
-import Skeleton from "./skeleton";
+export * from "./alert";
+export * from "./badge";
+export * from "./button-icon";
+export * from "./button";
+export * from "./card";
+export * from "./container";
+export * from "./dialog";
+export * from "./divider";
+export * from "./image-file-preview";
+export * from "./icon";
+export * from "./input-checkbox";
+export * from "./input-single-file";
+export * from "./input-text";
+export * from "./skeleton";
+
 import Text from "./text";
 
-export {
-  Alert,
-  Badge,
-  ButtonIcon,
-  Button,
-  Card,
-  Container,
-  Divider,
-  ImageFilePreview,
-  Icon,
-  InputCheckbox,
-  InputSingleFile,
-  InputText,
-  Skeleton,
-  Text,
-};
+export { Text };
