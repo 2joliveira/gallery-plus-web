@@ -84,7 +84,7 @@ interface ButtonProps
 	handling?: boolean;
 }
 
-export default function Button({
+export function Button({
 	variant,
 	size,
 	disabled,

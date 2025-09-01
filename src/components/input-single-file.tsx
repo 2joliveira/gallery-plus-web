@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useMemo } from "react";
+import { useWatch } from "react-hook-form";
 import { tv, type VariantProps } from "tailwind-variants";
 import Icon from "./icon";
 import Text, { textVariants } from "./text";
 import UploadFileIcon from "../assets/icons/upload-file.svg?react";
 import FileImageIcon from "../assets/icons/image.svg?react";
-import { useWatch } from "react-hook-form";
-import { useMemo } from "react";
 
 export const inputSingleFileVariants = tv({
   base: `
@@ -46,7 +46,7 @@ interface InputSingleFileProps
   replaceBy: React.ReactNode;
 }
 
-export default function InputSingleFile({
+export function InputSingleFile({
   size,
   error,
   form,
