@@ -6,7 +6,12 @@ export default function App() {
   return (
     <Container>
       Initial Commit
-			<InputSingleFile form={form} {...form.register('file')} />
+      <InputSingleFile
+        form={form}
+        {...form.register("file")}
+        allowedExtensions={["png", "jpg", "jpeg", "webp"]}
+        maxFileSizeMB={50}
+      />
     </Container>
   );
 }

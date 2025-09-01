@@ -12,7 +12,7 @@ export const inputSingleFileVariants = tv({
     flex flex-col items-center justify-center w-full
     border border-solid border-border-primary
     group-hover:border-border-active
-    rounded-lg transition
+    rounded-lg gap-1 transition
   `,
   variants: {
     size: {
@@ -41,12 +41,16 @@ interface InputSingleFileProps
     Omit<React.ComponentProps<"input">, "size"> {
   error?: React.ReactNode;
   form: any;
+  allowedExtensions: string[];
+  maxFileSizeMB: number;
 }
 
 export default function InputSingleFile({
   size,
-  form,
   error,
+  form,
+  allowedExtensions,
+  maxFileSizeMB,
   ...props
 }: InputSingleFileProps) {
   const formValues = useWatch({ control: form.control });
@@ -56,9 +60,29 @@ export default function InputSingleFile({
     [formValues, name]
   );
 
+  const { fileExtension, fileSize } = useMemo(
+    () => ({
+      fileExtension: formFile?.name?.split(".").pop()?.toLowerCase() || "",
+      fileSize: formFile?.size || 0,
+    }),
+    [formFile]
+  );
+
+  function isValidExtension() {
+    return allowedExtensions.includes(fileExtension);
+  }
+
+  function isValidSize() {
+    return fileSize <= maxFileSizeMB * 1024 * 1024;
+  }
+
+  function isValidFile() {
+    return isValidExtension() && isValidSize();
+  }
+
   return (
     <div>
-      {!formFile ? (
+      {!formFile || !isValidFile() ? (
         <>
           <div className="w-full relative group cursor-pointer">
             <input
@@ -80,11 +104,25 @@ export default function InputSingleFile({
             </div>
           </div>
 
-          {error && (
-            <Text variant="label-small" className="text-accent-red">
-              Erro no campo
-            </Text>
-          )}
+          <div className="flex flex-col gap-1 mt-1">
+            {formFile && !isValidExtension() && (
+              <Text variant="label-small" className="text-accent-red">
+                Tipo de arquivo inválido !
+              </Text>
+            )}
+
+            {formFile && !isValidSize() && (
+              <Text variant="label-small" className="text-accent-red">
+                Tamanho do arquivo ultrapassa o máximo permitido !
+              </Text>
+            )}
+
+            {error && (
+              <Text variant="label-small" className="text-accent-red">
+                {error}
+              </Text>
+            )}
+          </div>
         </>
       ) : (
         <div className="flex gap-3 items-center border border-solid border-border-primary mt-5 p-3 rounded">
