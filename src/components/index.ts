@@ -5,6 +5,7 @@ import Button from "./button";
 import Card from "./card";
 import Container from "./container";
 import Divider from "./divider";
+import { ImageFilePreview } from "./image-file-preview";
 import Icon from "./icon";
 import InputCheckbox from "./input-checkbox";
 import InputSingleFile from "./input-single-file";
@@ -20,6 +21,7 @@ export {
   Card,
   Container,
   Divider,
+  ImageFilePreview,
   Icon,
   InputCheckbox,
   InputSingleFile,
