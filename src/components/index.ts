@@ -11,6 +11,7 @@ export * from "./icon";
 export * from "./input-checkbox";
 export * from "./input-single-file";
 export * from "./input-text";
+export * from "./main-header";
 export * from "./skeleton";
 
 import Text from "./text";
