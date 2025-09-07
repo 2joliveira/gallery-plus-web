@@ -1,10 +1,13 @@
 import { Link } from "react-router";
 import type { Photo } from "../models/photo";
-import { ImagePreview } from "./image-preview";
-import Skeleton from "./skeleton";
-import { buttonTextVariants, buttonVariants } from "./button";
-import Text from "./text";
-import Badge from "./badge";
+import {
+  buttonTextVariants,
+  buttonVariants,
+  ImagePreview,
+  Text,
+} from "../../../components";
+import Skeleton from "../../../components/skeleton";
+import Badge from "../../../components/badge";
 
 interface PhotoWidgetProps {
   photo: Photo;
@@ -15,9 +18,13 @@ export function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
   return (
     <div className="flex flex-col gap-4">
       {!loading ? (
-        <ImagePreview src={`/images/${photo.imageId}`} />
+        <ImagePreview
+          src={`/images/${photo.imageId}`}
+          title={photo.title}
+          imageClassName="w-[10.875rem] h-[10.875rem]"
+        />
       ) : (
-        <Skeleton className="w-[13.5625rem] h-[13.5625rem] rounded-lg" />
+        <Skeleton className="w-[10.875rem] h-[10.875rem] rounded-lg" />
       )}
 
       <div className="flex flex-col gap-2">

@@ -12,7 +12,6 @@ export * from "./input-checkbox";
 export * from "./input-single-file";
 export * from "./input-text";
 export * from "./main-header";
-export * from "./photo-widget"
 export * from "./photos-search";
 export * from "./skeleton";
 
