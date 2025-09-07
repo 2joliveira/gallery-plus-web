@@ -5,9 +5,8 @@ import {
   buttonVariants,
   ImagePreview,
   Text,
-} from "../../../components";
-import Skeleton from "../../../components/skeleton";
-import Badge from "../../../components/badge";
+} from "@/components";
+import { Badge, Skeleton } from "@/components";
 
 interface PhotoWidgetProps {
   photo: Photo;

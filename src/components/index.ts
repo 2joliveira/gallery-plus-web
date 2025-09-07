@@ -14,7 +14,4 @@ export * from "./input-text";
 export * from "./main-header";
 export * from "./photos-search";
 export * from "./skeleton";
-
-import Text from "./text";
-
-export { Text };
+export * from "./text";

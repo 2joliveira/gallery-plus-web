@@ -1,8 +1,8 @@
 import React from "react";
-import Text from "./text";
-import {tv, type VariantProps} from "tailwind-variants";
 import cx from "classnames";
-import Skeleton from "./skeleton";
+import {tv, type VariantProps} from "tailwind-variants";
+import { Text } from "./text";
+import { Skeleton } from "./skeleton";
 
 export const badgeVariants = tv({
 	base: "inline-flex items-center justify-center rounded",
@@ -51,7 +51,7 @@ interface BadgeProps
 	loading?: boolean;
 }
 
-export default function Badge({
+export function Badge({
 	variant,
 	size,
 	className,

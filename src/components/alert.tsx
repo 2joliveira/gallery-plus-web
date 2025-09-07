@@ -1,5 +1,5 @@
 import {tv, type VariantProps} from "tailwind-variants";
-import Text from "./text";
+import { Text } from "./text";
 
 export const alertVariants = tv({
 	base: `
