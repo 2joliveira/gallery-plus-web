@@ -57,7 +57,7 @@ interface InputCh3eckboxProps
   extends VariantProps<typeof inputCheckboxVariants>,
     Omit<React.ComponentProps<"input">, "size" | "disabled"> {}
 
-export default function InputCheckbox({
+export function InputCheckbox({
   variant,
   size,
   disabled,

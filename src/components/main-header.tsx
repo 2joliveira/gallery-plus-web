@@ -4,7 +4,7 @@ import { Container } from "./container";
 import Logo from "../assets/images/galeria-plus-full-logo.svg?react";
 import { Button } from "./button";
 import { PhotosSearch } from "./photos-search";
-import Divider from "./divider";
+import { Divider } from "./divider";
 
 interface MainHeaderProps extends React.ComponentProps<"div"> {}
 
