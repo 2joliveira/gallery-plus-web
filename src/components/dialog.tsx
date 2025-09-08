@@ -3,7 +3,7 @@ import cn from "classnames";
 import Card from "./card";
 import { Text } from "./text";
 import { ButtonIcon } from "./button-icon";
-import Divider from "./divider";
+import { Divider } from "./divider";
 import XIcon from "../assets/icons/x.svg?react";
 
 export const Dialog = DialogRadix.Root;
