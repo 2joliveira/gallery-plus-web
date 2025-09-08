@@ -1,7 +1,20 @@
+import { Container, Skeleton, Text } from "@/components";
+import { PhotosNavigator } from "@/contexts/photos/components";
+
 export function PhotoDetails() {
+  const isLoading = false;
+
   return (
-    <div>
-      <h1>PHOTO DETAILS</h1>
-    </div>
+    <Container>
+      <header className="flex items-center justify-between gap-8 mb-8">
+        {!isLoading ? (
+          <Text variant="heading-large">photo.title</Text>
+        ) : (
+          <Skeleton className="w-48 h-8" />
+        )}
+
+        <PhotosNavigator />
+      </header>
+    </Container>
   );
 }

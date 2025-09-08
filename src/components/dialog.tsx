@@ -2,7 +2,7 @@ import * as DialogRadix from "@radix-ui/react-dialog";
 import cn from "classnames";
 import Card from "./card";
 import { Text } from "./text";
-import ButtonIcon from "./button-icon";
+import { ButtonIcon } from "./button-icon";
 import Divider from "./divider";
 import XIcon from "../assets/icons/x.svg?react";
 
