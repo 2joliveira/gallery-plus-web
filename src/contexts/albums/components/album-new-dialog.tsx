@@ -1,18 +1,19 @@
 import {
   Button,
+  Dialog,
   DialogBody,
   DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
-  ImagePreview,
+  DialogTrigger,
   InputText,
   Skeleton,
   Text,
 } from "@/components";
 import type { Photo } from "@/contexts/photos/models/photo";
-import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import SelectCheckboxIlustration from "@/assets/images/select-checkbox.svg?react";
+import { PhotoSelectable } from "@/contexts/photos/components";
 
 interface AlbumNewDialogProps {
   trigger: React.ReactNode;
@@ -51,8 +52,12 @@ export function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
       ],
     },
   ];
-  
+
   const isLoading = false;
+
+  function handleTogglePhoto(selected: boolean, photoId: string) {
+    console.log({ selected, photoId });
+  }
 
   return (
     <Dialog>
@@ -72,11 +77,14 @@ export function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
             {!isLoading && photos.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {photos.map((photo) => (
-                  <ImagePreview
+                  <PhotoSelectable
                     key={photo.id}
                     src={`/images/${photo.imageId}`}
                     title={photo.title}
-                    className="w-20 h-20 rounded"
+                    imageClassName="w-20 h-20"
+                    onSelectimage={(selected) =>
+                      handleTogglePhoto(selected, photo.id)
+                    }
                   />
                 ))}
               </div>
@@ -87,7 +95,7 @@ export function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
                 {Array.from({ length: 4 }).map((_, index) => (
                   <Skeleton
                     key={`photo-loading-${index}`}
-                    className="w-20 h-20 rounded"
+                    className="w-20 h-20 rounded-lg"
                   />
                 ))}
               </div>
