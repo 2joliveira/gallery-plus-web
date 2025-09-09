@@ -1,3 +1,4 @@
 export * from "./photo-list";
-export * from "./photos-navigator";
+export * from "./photo-new-dialog";
 export * from "./photo-widget";
+export * from "./photos-navigator";
