@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useState } from "react";
-import InputText from "./input-text";
+import { InputText } from "./input-text";
 import { debounce } from "../utils";
 import SearchIcon from "../assets/icons/search.svg?react";
 

@@ -5,6 +5,7 @@ import Logo from "../assets/images/galeria-plus-full-logo.svg?react";
 import { Button } from "./button";
 import { PhotosSearch } from "./photos-search";
 import { Divider } from "./divider";
+import { PhotoNewDialog } from "@/contexts/photos/components";
 
 interface MainHeaderProps extends React.ComponentProps<"div"> {}
 
@@ -24,7 +25,8 @@ export function MainHeader({ className, ...props }: MainHeaderProps) {
       <Divider orientation="vertical" className="h-10" />
 
       <div className="flex items-center gap-3">
-        <Button>Nova foto</Button>
+        <PhotoNewDialog trigger={<Button>Nova foto</Button>} />
+
         <Button variant="secondary">Criar álbum</Button>
       </div>
     </Container>
