@@ -60,8 +60,6 @@ export function PhotoNewDialog({ trigger, loading }: PhotoNewDialogProps) {
       albumsSet.add(albumId);
     }
 
-    console.log({ array: Array.from(albumsSet) });
-
     form.setValue("albumsIds", Array.from(albumsSet), {
       shouldValidate: true,
       shouldDirty: true,
