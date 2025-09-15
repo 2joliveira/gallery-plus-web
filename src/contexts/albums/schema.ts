@@ -2,7 +2,7 @@ import z from "zod";
 
 export const albumNewFormSchema = z.object({
   title: z.string().min(1, { message: "Título é obrigatório." }).max(255),
-  photosids: z.array(z.string().uuid()).optional(),
+  photosIds: z.array(z.string().uuid()).optional(),
 });
 
 export type AlbumNewFormSchema = z.infer<typeof albumNewFormSchema>;
