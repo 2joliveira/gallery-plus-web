@@ -1,3 +1,6 @@
+import { useEffect, useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
   Dialog,
@@ -11,115 +14,124 @@ import {
   Skeleton,
   Text,
 } from "@/components";
-import type { Photo } from "@/contexts/photos/models/photo";
-import SelectCheckboxIlustration from "@/assets/images/select-checkbox.svg?react";
 import { PhotoSelectable } from "@/contexts/photos/components";
+import { usePhotos } from "@/contexts/photos/hooks/use-photos";
+import { albumNewFormSchema, type AlbumNewFormSchema } from "../schema";
+import SelectCheckboxIlustration from "@/assets/images/select-checkbox.svg?react";
+import { useAlbum } from "../hooks/use-album";
 
 interface AlbumNewDialogProps {
   trigger: React.ReactNode;
 }
 
 export function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
-  const photos: Photo[] = [
-    {
-      id: "1",
-      title: "Image 1",
-      imageId: "portrait-tower.png",
-      albums: [
-        { id: "1", title: "Álbum 1" },
-        { id: "2", title: "Álbum 2" },
-        { id: "3", title: "Álbum 3" },
-      ],
-    },
-    {
-      id: "2",
-      title: "Image 2",
-      imageId: "portrait-tower.png",
-      albums: [
-        { id: "1", title: "Álbum 1" },
-        { id: "2", title: "Álbum 2" },
-        { id: "3", title: "Álbum 3" },
-      ],
-    },
-    {
-      id: "3",
-      title: "Image 3",
-      imageId: "portrait-tower.png",
-      albums: [
-        { id: "1", title: "Álbum 1" },
-        { id: "2", title: "Álbum 2" },
-        { id: "3", title: "Álbum 3" },
-      ],
-    },
-  ];
+  const { createAlbum } = useAlbum();
+  const [isCreatingAlbum, setIsCreatingAlbum] = useTransition();
+  const { photos, isLoadingPhotos } = usePhotos();
+  const [modalOpen, setModalOpen] = useState(false);
+  const form = useForm<AlbumNewFormSchema>({
+    resolver: zodResolver(albumNewFormSchema),
+  });
 
-  const isLoading = false;
+  useEffect(() => {
+    if (!modalOpen) form.reset();
+  }, [modalOpen, form]);
 
   function handleTogglePhoto(selected: boolean, photoId: string) {
-    console.log({ selected, photoId });
+    const photosIds = form.getValues("photosIds") || [];
+    let currentValues = [];
+
+    if (selected) {
+      currentValues = [...photosIds, photoId];
+    } else {
+      currentValues = photosIds.filter((id) => id !== photoId);
+    }
+
+    form.setValue("photosIds", currentValues);
+  }
+
+  function handleSubmit(payload: AlbumNewFormSchema) {
+    setIsCreatingAlbum(async () => {
+      createAlbum(payload);
+      setModalOpen(false);
+    });
   }
 
   return (
-    <Dialog>
+    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
 
       <DialogContent>
-        <DialogHeader>Criar álbum</DialogHeader>
+        <form onSubmit={form.handleSubmit(handleSubmit)}>
+          <DialogHeader>Criar álbum</DialogHeader>
 
-        <DialogBody className="flex flex-col gap-5">
-          <InputText placeholder="Adicione um título" />
+          <DialogBody className="flex flex-col gap-5">
+            <InputText
+              placeholder="Adicione um título"
+              error={form.formState.errors.title?.message}
+              {...form.register("title")}
+            />
 
-          <div className="space-y-3">
-            <Text as="div" variant="label-small">
-              Fotos cadastradas
-            </Text>
+            <div className="space-y-3">
+              <Text as="div" variant="label-small">
+                Fotos cadastradas
+              </Text>
 
-            {!isLoading && photos.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {photos.map((photo) => (
-                  <PhotoSelectable
-                    key={photo.id}
-                    src={`/images/${photo.imageId}`}
-                    title={photo.title}
-                    imageClassName="w-20 h-20"
-                    onSelectimage={(selected) =>
-                      handleTogglePhoto(selected, photo.id)
-                    }
-                  />
-                ))}
-              </div>
-            )}
+              {!isLoadingPhotos && photos.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {photos.map((photo) => (
+                    <PhotoSelectable
+                      key={photo.id}
+                      src={photo.url}
+                      title={photo.title}
+                      imageClassName="w-20 h-20"
+                      onSelectimage={(selected) =>
+                        handleTogglePhoto(selected, photo.id)
+                      }
+                    />
+                  ))}
+                </div>
+              )}
 
-            {isLoading && (
-              <div className="flex flex-wrap gap-2">
-                {Array.from({ length: 4 }).map((_, index) => (
-                  <Skeleton
-                    key={`photo-loading-${index}`}
-                    className="w-20 h-20 rounded-lg"
-                  />
-                ))}
-              </div>
-            )}
+              {isLoadingPhotos && (
+                <div className="flex flex-wrap gap-2">
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <Skeleton
+                      key={`photo-loading-${index}`}
+                      className="w-20 h-20 rounded-lg"
+                    />
+                  ))}
+                </div>
+              )}
 
-            {!isLoading && photos.length === 0 && (
-              <div className="w-full flex flex-col justify-center items-center gap-3">
-                <SelectCheckboxIlustration />
+              {!isLoadingPhotos && photos.length === 0 && (
+                <div className="w-full flex flex-col justify-center items-center gap-3">
+                  <SelectCheckboxIlustration />
 
-                <Text variant="paragraph-medium" className="text-center">
-                  Nenhuma foto disponível para selção
-                </Text>
-              </div>
-            )}
-          </div>
-        </DialogBody>
+                  <Text variant="paragraph-medium" className="text-center">
+                    Nenhuma foto disponível para selção
+                  </Text>
+                </div>
+              )}
+            </div>
+          </DialogBody>
 
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="secondary">Cancelar</Button>
-          </DialogClose>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="secondary" disabled={isCreatingAlbum}>
+                Cancelar
+              </Button>
+            </DialogClose>
 
-          <Button>Criar</Button>
-        </DialogFooter>
+            <Button
+              type="submit"
+              disabled={isCreatingAlbum}
+              handling={isCreatingAlbum}
+            >
+              Criar
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
