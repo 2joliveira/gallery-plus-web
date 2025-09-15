@@ -1,3 +1,4 @@
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -17,19 +18,20 @@ import { PhotoSelectable } from "@/contexts/photos/components";
 import { usePhotos } from "@/contexts/photos/hooks/use-photos";
 import { albumNewFormSchema, type AlbumNewFormSchema } from "../schema";
 import SelectCheckboxIlustration from "@/assets/images/select-checkbox.svg?react";
-import { useEffect, useState } from "react";
+import { useAlbum } from "../hooks/use-album";
 
 interface AlbumNewDialogProps {
   trigger: React.ReactNode;
 }
 
 export function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
+  const { createAlbum } = useAlbum();
+  const [isCreatingAlbum, setIsCreatingAlbum] = useTransition();
+  const { photos, isLoadingPhotos } = usePhotos();
+  const [modalOpen, setModalOpen] = useState(false);
   const form = useForm<AlbumNewFormSchema>({
     resolver: zodResolver(albumNewFormSchema),
   });
-  const { photos, isLoadingPhotos } = usePhotos();
-
-  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     if (!modalOpen) form.reset();
@@ -49,7 +51,10 @@ export function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
   }
 
   function handleSubmit(payload: AlbumNewFormSchema) {
-    console.log({ payload });
+    setIsCreatingAlbum(async () => {
+      createAlbum(payload);
+      setModalOpen(false);
+    });
   }
 
   return (
@@ -113,10 +118,18 @@ export function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="secondary">Cancelar</Button>
+              <Button variant="secondary" disabled={isCreatingAlbum}>
+                Cancelar
+              </Button>
             </DialogClose>
 
-            <Button type="submit">Criar</Button>
+            <Button
+              type="submit"
+              disabled={isCreatingAlbum}
+              handling={isCreatingAlbum}
+            >
+              Criar
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
