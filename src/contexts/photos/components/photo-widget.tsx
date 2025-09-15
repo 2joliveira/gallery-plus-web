@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-import type { Photo } from "../models/photo";
 import {
   buttonTextVariants,
   buttonVariants,
@@ -7,9 +6,10 @@ import {
   Text,
 } from "@/components";
 import { Badge, Skeleton } from "@/components";
+import type { PhotoResponse } from "../hooks/use-photos";
 
 interface PhotoWidgetProps {
-  photo: Photo;
+  photo: PhotoResponse;
   loading?: boolean;
 }
 
@@ -18,7 +18,7 @@ export function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
     <div className="flex flex-col gap-4">
       {!loading ? (
         <ImagePreview
-          src={`/images/${photo.imageId}`}
+          src={photo.url}
           title={photo.title}
           imageClassName="w-[10.875rem] h-[10.875rem]"
         />
@@ -38,12 +38,12 @@ export function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
         <div className="flex gap-1 min-h-[1.375rem]">
           {!loading ? (
             <>
-              {photo.albums.slice(0, 2).map((album) => (
+              {photo.albums?.slice(0, 2).map((album) => (
                 <Badge className="truncate" size="xs" key={album.id}>
                   {album.title}
                 </Badge>
               ))}
-              {photo.albums.length > 2 && (
+              {photo.albums?.length > 2 && (
                 <Badge size="xs">+{photo.albums.length - 2}</Badge>
               )}
             </>

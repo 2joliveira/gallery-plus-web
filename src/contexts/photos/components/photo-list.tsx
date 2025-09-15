@@ -1,9 +1,9 @@
 import { PhotoWidget } from "./photo-widget";
-import type { Photo } from "../models/photo";
 import { Text, Skeleton } from "@/components";
+import type { PhotoResponse } from "../hooks/use-photos";
 
 interface PhotoListProps {
-  photos: Photo[];
+  photos: PhotoResponse[];
   loading?: boolean;
 }
 
@@ -38,7 +38,7 @@ export function PhotoList({ photos, loading }: PhotoListProps) {
           {Array.from({ length: 10 }).map((_, index) => (
             <PhotoWidget
               key={`photo-loading-${index}`}
-              photo={{} as Photo}
+              photo={{} as PhotoResponse}
               loading
             />
           ))}
