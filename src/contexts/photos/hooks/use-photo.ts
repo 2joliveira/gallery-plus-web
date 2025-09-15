@@ -1,5 +1,6 @@
 import { api } from "@/utils/api";
 import type { PhotoNewFormSchema } from "../schema";
+import toast from "react-hot-toast";
 
 export function usePhoto() {
   async function createPhoto(payload: PhotoNewFormSchema) {
@@ -13,7 +14,10 @@ export function usePhoto() {
           },
         }
       );
+
+      toast.success("Foto salva com sucesso!");
     } catch (err) {
+      toast.error(`Erro ao salvar foto: ${err}`);
       throw console.error(err);
     }
   }
