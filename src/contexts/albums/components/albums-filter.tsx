@@ -1,18 +1,12 @@
 import { Button, Skeleton, Text } from "@/components";
-import type { Album } from "../models/album";
 import cx from "classnames";
+import { useAlbums } from "../hooks/use-albums";
 
-interface AlbumsFilterProps extends React.ComponentProps<"div"> {
-  albums: Album[];
-  loading?: boolean;
-}
+interface AlbumsFilterProps extends React.ComponentProps<"div"> {}
 
-export function AlbumsFilter({
-  albums,
-  loading,
-  className,
-  ...props
-}: AlbumsFilterProps) {
+export function AlbumsFilter({ className, ...props }: AlbumsFilterProps) {
+  const { albums, isLoadingAlbums } = useAlbums();
+
   return (
     <div
       className={cx("flex items-center gap-3.5 overflow-x-auto", className)}
@@ -20,7 +14,7 @@ export function AlbumsFilter({
     >
       <Text variant="heading-small">Álbuns</Text>
       <div className="flex gap-3">
-        {!loading ? (
+        {!isLoadingAlbums ? (
           <>
             <Button variant="primary" size="sm" className="cursor-pointer">
               Todos

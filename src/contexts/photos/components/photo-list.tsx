@@ -1,13 +1,10 @@
 import { PhotoWidget } from "./photo-widget";
 import { Text, Skeleton } from "@/components";
-import type { PhotoResponse } from "../hooks/use-photos";
+import { usePhotos, type PhotoResponse } from "../hooks/use-photos";
 
-interface PhotoListProps {
-  photos: PhotoResponse[];
-  loading?: boolean;
-}
+export function PhotoList() {
+  const { photos, isLoadingPhotos } = usePhotos();
 
-export function PhotoList({ photos, loading }: PhotoListProps) {
   return (
     <div className="space-y-6">
       <Text
@@ -16,16 +13,14 @@ export function PhotoList({ photos, loading }: PhotoListProps) {
         className="flex items-center justify-end gap-1 text-accent-span"
       >
         Total:{" "}
-        {!loading ? (
+        {!isLoadingPhotos ? (
           <div>{photos.length}</div>
         ) : (
-          <Skeleton
-            className="w-6 h-6"
-          />
+          <Skeleton className="w-6 h-6" />
         )}
       </Text>
 
-      {!loading && photos?.length > 0 && (
+      {!isLoadingPhotos && photos?.length > 0 && (
         <div className="grid grid-cols-5 gap-9">
           {photos.map((photo) => (
             <PhotoWidget key={photo.id} photo={photo} />
@@ -33,7 +28,7 @@ export function PhotoList({ photos, loading }: PhotoListProps) {
         </div>
       )}
 
-      {loading && (
+      {isLoadingPhotos && (
         <div className="grid grid-cols-5 gap-9">
           {Array.from({ length: 10 }).map((_, index) => (
             <PhotoWidget
@@ -45,7 +40,7 @@ export function PhotoList({ photos, loading }: PhotoListProps) {
         </div>
       )}
 
-      {!loading && photos.length === 0 && (
+      {!isLoadingPhotos && photos.length === 0 && (
         <div className="flex justify-center items-center h-full">
           <Text variant="paragraph-large">Nenhuma foto encontrada !</Text>
         </div>
