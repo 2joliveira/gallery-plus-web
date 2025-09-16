@@ -16,27 +16,22 @@ import {
   Skeleton,
   Text,
 } from "@/components";
-import type { Album } from "@/contexts/albums/models/album";
 import { photoNewFormSchema, type PhotoNewFormSchema } from "../schema";
 import { useEffect, useState, useTransition } from "react";
 import { usePhoto } from "../hooks/use-photo";
+import { useAlbums } from "@/contexts/albums/hooks/use-albums";
 
 interface PhotoNewDialogProps {
   trigger: React.ReactNode;
-  loading?: boolean;
 }
 
-export function PhotoNewDialog({ trigger, loading }: PhotoNewDialogProps) {
+export function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
   const [modalOpen, setModalOpen] = useState(false);
+  const { albums, isLoadingAlbums } = useAlbums();
+
   const form = useForm<PhotoNewFormSchema>({
     resolver: zodResolver(photoNewFormSchema),
   });
-
-  const albums: Album[] = [
-    { id: "c76ea652-6261-4c09-ae16-81031b38bd4f", title: "Álbum 1" },
-    { id: "ad85912a-7754-4e8b-9ff6-f19391ed4e36", title: "Álbum 2" },
-    { id: "f055bfc5-2e89-4941-96c9-b52637e9a804", title: "Álbum 3" },
-  ];
 
   const { createPhoto } = usePhoto();
   const [isCreatingPhoto, setIsCreatingPhoto] = useTransition();
@@ -112,7 +107,7 @@ export function PhotoNewDialog({ trigger, loading }: PhotoNewDialogProps) {
               </Text>
 
               <div className="flex flex-wrap gap-3">
-                {!loading &&
+                {!isLoadingAlbums &&
                   albums.length > 0 &&
                   albums.map((album) => (
                     <Button
@@ -129,7 +124,7 @@ export function PhotoNewDialog({ trigger, loading }: PhotoNewDialogProps) {
                     </Button>
                   ))}
 
-                {loading &&
+                {isLoadingAlbums &&
                   Array.from({ length: 5 }).map((_, index) => (
                     <Skeleton
                       key={`album-loading-${index}`}

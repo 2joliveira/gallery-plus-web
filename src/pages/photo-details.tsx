@@ -1,9 +1,12 @@
 import { Button, Container, ImagePreview, Skeleton, Text } from "@/components";
 import { AlbumsListSelectable } from "@/contexts/albums/components";
+import { useAlbums } from "@/contexts/albums/hooks/use-albums";
 import { PhotosNavigator } from "@/contexts/photos/components";
 import type { Photo } from "@/contexts/photos/models/photo";
 
 export function PhotoDetails() {
+  const { albums, isLoadingAlbums } = useAlbums();
+  
   const isLoading = false;
   const photo = {
     id: "1",
@@ -56,12 +59,8 @@ export function PhotoDetails() {
 
           <AlbumsListSelectable
             photo={photo}
-            albums={[
-              { id: "1", title: "Álbum 1" },
-              { id: "2", title: "Álbum 2" },
-              { id: "3", title: "Álbum 3" },
-            ]}
-            loading={isLoading}
+            albums={albums}
+            loading={isLoadingAlbums}
           />
         </div>
       </div>
