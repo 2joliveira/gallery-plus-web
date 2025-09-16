@@ -9,7 +9,7 @@ export function usePhoto() {
     try {
       await api.post(
         `/photos`,
-        { file: payload.file[0], title: payload.title },
+        { ...payload, file: payload.file[0] },
         {
           headers: {
             "Content-Type": "multipart/form-data",
