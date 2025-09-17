@@ -23,14 +23,13 @@ export function usePhotos() {
   const queryClient = useQueryClient();
 
   const fetchPhotos = async (currentPage: number) => {
-    const response = await fetcher("/photos", {
+    const { photos, hasMore } = await fetcher("/photos", {
       params: { page: currentPage, limit },
     });
 
-
     return {
-      photos: response,
-      hasMore: false,
+      photos,
+      hasMore,
     };
   };
 
