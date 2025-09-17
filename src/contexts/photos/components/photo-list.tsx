@@ -1,9 +1,9 @@
 import { PhotoWidget } from "./photo-widget";
-import { Text, Skeleton } from "@/components";
+import { Text, Skeleton, Button } from "@/components";
 import { usePhotos, type PhotoResponse } from "../hooks/use-photos";
 
 export function PhotoList() {
-  const { photos, isLoadingPhotos } = usePhotos();
+  const { photos, isLoadingPhotos, hasMore, page, setPage } = usePhotos();
 
   return (
     <div className="space-y-6">
@@ -45,6 +45,16 @@ export function PhotoList() {
           <Text variant="paragraph-large">Nenhuma foto encontrada !</Text>
         </div>
       )}
+
+      <div className="flex justify-center gap-4 items-center mt-6">
+        <Button onClick={() => setPage(page - 1)} disabled={page === 1}>
+          Anterior
+        </Button>
+        <Text>Página {page}</Text>
+        <Button onClick={() => setPage(page + 1)} disabled={!hasMore}>
+          Próxima
+        </Button>
+      </div>
     </div>
   );
 }
