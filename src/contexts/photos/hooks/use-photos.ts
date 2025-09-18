@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
 import {
-  keepPreviousData,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+  createSerializer,
+  parseAsInteger,
+  parseAsString,
+  useQueryState,
+} from "nuqs";
+import { useQuery } from "@tanstack/react-query";
 import { fetcher } from "@/utils/api";
 import type { Photo } from "../models/photo";
 
@@ -16,39 +17,29 @@ interface Response {
   hasMore: boolean;
 }
 
+const toSearchParams = createSerializer({
+  page: parseAsInteger,
+  albumId: parseAsString,
+});
+
 export function usePhotos() {
-  const [page, setPage] = useState(1);
-  const limit = 10;
+  const [pageParam, setPage] = useQueryState("page", {
+    defaultValue: 1,
+    parse: Number,
+    serialize: String,
+    shallow: false,
+  });
+  const [albumIdParam, setAlbumId] = useQueryState("albumId", {
+    shallow: false,
+  });
 
-  const queryClient = useQueryClient();
+  const page = pageParam ?? 1;
+  const albumId = albumIdParam ?? null;
 
-  const fetchPhotos = async (currentPage: number) => {
-    const { photos, hasMore } = await fetcher("/photos", {
-      params: { page: currentPage, limit },
-    });
-
-    return {
-      photos,
-      hasMore,
-    };
-  };
-
-  const { data, isFetching, isLoading, isPlaceholderData } = useQuery<Response>(
-    {
-      queryKey: ["photos", page],
-      queryFn: () => fetchPhotos(page),
-      placeholderData: keepPreviousData,
-    }
-  );
-
-  useEffect(() => {
-    if (!isPlaceholderData && data?.hasMore) {
-      queryClient.prefetchQuery({
-        queryKey: ["photos", page + 1],
-        queryFn: () => fetchPhotos(page),
-      });
-    }
-  }, [data, isPlaceholderData, page, queryClient]);
+  const { data, isFetching, isLoading } = useQuery<Response>({
+    queryKey: ["photos", page, albumId],
+    queryFn: () => fetcher(`/photos${toSearchParams({ page, albumId })}`),
+  });
 
   return {
     photos: data?.photos ?? [],
@@ -57,6 +48,9 @@ export function usePhotos() {
     handling: isFetching,
     page,
     setPage,
-    limit,
+    filters: {
+      albumId,
+      setAlbumId,
+    },
   };
 }
