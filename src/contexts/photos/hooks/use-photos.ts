@@ -23,22 +23,17 @@ const toSearchParams = createSerializer({
 });
 
 export function usePhotos() {
-  const [pageParam, setPage] = useQueryState("page", {
+  const [page, setPage] = useQueryState("page", {
     defaultValue: 1,
     parse: Number,
     serialize: String,
-    shallow: false,
   });
-  const [albumIdParam, setAlbumId] = useQueryState("albumId", {
-    shallow: false,
-  });
-
-  const page = pageParam ?? 1;
-  const albumId = albumIdParam ?? null;
+  const [albumId, setAlbumId] = useQueryState("albumId");
 
   const { data, isFetching, isLoading } = useQuery<Response>({
     queryKey: ["photos", page, albumId],
     queryFn: () => fetcher(`/photos${toSearchParams({ page, albumId })}`),
+    staleTime: 5000,
   });
 
   return {
