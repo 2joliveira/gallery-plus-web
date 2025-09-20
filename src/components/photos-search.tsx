@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useState } from "react";
 import { InputText } from "./input-text";
-import { debounce } from "../utils";
+import { debounce } from "../utils/debounce";
 import SearchIcon from "../assets/icons/search.svg?react";
 
 export function PhotosSearch() {
