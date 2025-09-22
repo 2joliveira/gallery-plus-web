@@ -20,6 +20,7 @@ interface Response {
 const toSearchParams = createSerializer({
   page: parseAsInteger,
   albumId: parseAsString,
+  q: parseAsString,
 });
 
 export function usePhotos() {
@@ -29,10 +30,11 @@ export function usePhotos() {
     serialize: String,
   });
   const [albumId, setAlbumId] = useQueryState("albumId");
+  const [q, setQ] = useQueryState("q");
 
   const { data, isFetching, isLoading } = useQuery<Response>({
-    queryKey: ["photos", page, albumId],
-    queryFn: () => fetcher(`/photos${toSearchParams({ page, albumId })}`),
+    queryKey: ["photos", page, albumId, q],
+    queryFn: () => fetcher(`/photos${toSearchParams({ page, albumId, q })}`),
     staleTime: 5000,
   });
 
@@ -46,6 +48,8 @@ export function usePhotos() {
     filters: {
       albumId,
       setAlbumId,
+      q,
+      setQ,
     },
   };
 }
