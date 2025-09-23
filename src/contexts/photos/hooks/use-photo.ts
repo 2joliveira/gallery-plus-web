@@ -1,10 +1,24 @@
-import { api } from "@/utils/api";
+import { api, fetcher } from "@/utils/api";
 import type { PhotoNewFormSchema } from "../schema";
 import toast from "react-hot-toast";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import type { Photo } from "../models/photo";
 
-export function usePhoto() {
+interface PhotoDatailResponse extends Photo {
+  url: string;
+  nextPhotoId?: string;
+  previousPhotoId?: string;
+}
+
+export function usePhoto(id?: string) {
   const queryClient = useQueryClient();
+
+  const { data, isLoading } = useQuery<PhotoDatailResponse>({
+    queryKey: ["photo", id],
+    queryFn: () => fetcher(`/photos/${id}`),
+    enabled: !!id,
+  });
+
   async function createPhoto(payload: PhotoNewFormSchema) {
     try {
       await api.post(
@@ -27,5 +41,9 @@ export function usePhoto() {
   }
   return {
     createPhoto,
+    photo: data,
+    nextPhotoId: data?.nextPhotoId,
+    previousPhotoId: data?.previousPhotoId,
+    isLoadingPhoto: isLoading,
   };
 }

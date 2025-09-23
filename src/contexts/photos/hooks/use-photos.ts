@@ -12,7 +12,7 @@ export interface PhotoResponse extends Photo {
   url: string;
 }
 
-interface Response {
+interface PhotosResponse {
   photos: PhotoResponse[];
   hasMore: boolean;
 }
@@ -32,7 +32,7 @@ export function usePhotos() {
   const [albumId, setAlbumId] = useQueryState("albumId");
   const [q, setQ] = useQueryState("q");
 
-  const { data, isFetching, isLoading } = useQuery<Response>({
+  const { data, isFetching, isLoading } = useQuery<PhotosResponse>({
     queryKey: ["photos", page, albumId, q],
     queryFn: () => fetcher(`/photos${toSearchParams({ page, albumId, q })}`),
     staleTime: 5000,
