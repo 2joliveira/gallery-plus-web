@@ -3,12 +3,25 @@ import { AlbumsListSelectable } from "@/contexts/albums/components";
 import { useAlbums } from "@/contexts/albums/hooks/use-albums";
 import { PhotosNavigator } from "@/contexts/photos/components";
 import { usePhoto } from "@/contexts/photos/hooks/use-photo";
+import { useCallback } from "react";
 import { useParams } from "react-router";
 
 export function PhotoDetails() {
   const { id } = useParams();
   const { photo, isLoadingPhoto, nextPhotoId, previousPhotoId } = usePhoto(id);
   const { albums, isLoadingAlbums } = useAlbums();
+
+  const RenderAlbumsList = useCallback(() => {
+    if (!photo) return;
+
+    return (
+      <AlbumsListSelectable
+        photo={photo}
+        albums={albums}
+        loading={isLoadingAlbums}
+      />
+    );
+  }, [albums, isLoadingAlbums, photo]);
 
   return (
     <Container>
@@ -53,11 +66,7 @@ export function PhotoDetails() {
               Álbuns
             </Text>
 
-            <AlbumsListSelectable
-              photo={photo}
-              albums={albums}
-              loading={isLoadingAlbums}
-            />
+            <RenderAlbumsList />
           </div>
         )}
       </div>
