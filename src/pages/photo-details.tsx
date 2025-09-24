@@ -10,8 +10,6 @@ export function PhotoDetails() {
   const { photo, isLoadingPhoto, nextPhotoId, previousPhotoId } = usePhoto(id);
   const { albums, isLoadingAlbums } = useAlbums();
 
-  console.log(photo)
-
   return (
     <Container>
       <header className="flex items-center justify-between gap-8 mb-8">
