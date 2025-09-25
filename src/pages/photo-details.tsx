@@ -16,7 +16,7 @@ export function PhotoDetails() {
 
   function handleDeletephoto() {
     setIsDeletingPhoto(async () => {
-      deletePhoto(id!);
+      deletePhoto(photo!.imageId);
     });
   }
 

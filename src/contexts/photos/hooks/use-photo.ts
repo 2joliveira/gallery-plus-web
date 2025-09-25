@@ -47,9 +47,9 @@ export function usePhoto(id?: string) {
     }
   }
 
-  async function deletePhoto(photoId: string) {
+  async function deletePhoto(imageId: string) {
     try {
-      await api.delete(`/photos/${photoId}`);
+      await api.delete(`/photos/${id}/${imageId}`);
 
       toast.success("Foto deletada com sucesso!");
 
