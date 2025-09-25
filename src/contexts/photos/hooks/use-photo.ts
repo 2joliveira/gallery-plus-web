@@ -3,6 +3,8 @@ import type { PhotoNewFormSchema } from "../schema";
 import toast from "react-hot-toast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Photo } from "../models/photo";
+import { useNavigate } from "react-router";
+import { usePhotos } from "./use-photos";
 
 interface PhotoDatailResponse extends Photo {
   url: string;
@@ -11,6 +13,11 @@ interface PhotoDatailResponse extends Photo {
 }
 
 export function usePhoto(id?: string) {
+  const navigate = useNavigate();
+  const {
+    page,
+    filters: { albumId, q },
+  } = usePhotos();
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery<PhotoDatailResponse>({
@@ -39,11 +46,28 @@ export function usePhoto(id?: string) {
       throw console.error(err);
     }
   }
+
+  async function deletePhoto(imageId: string) {
+    try {
+      await api.delete(`/photos/${id}/${imageId}`);
+
+      toast.success("Foto deletada com sucesso!");
+
+      queryClient.invalidateQueries({ queryKey: ["photos", page, albumId, q] });
+
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao deletar foto!");
+    }
+  }
+
   return {
     createPhoto,
     photo: data,
     nextPhotoId: data?.nextPhotoId,
     previousPhotoId: data?.previousPhotoId,
     isLoadingPhoto: isLoading,
+    deletePhoto,
   };
 }
