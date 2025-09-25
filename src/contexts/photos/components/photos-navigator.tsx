@@ -27,13 +27,13 @@ export function PhotosNavigator({
               icon={ArrowLeftIcon}
               variant="secondary"
               disabled={!previousPhotoid}
-              onClick={() => navigate(`/photo/${previousPhotoid}`)}
+              onClick={() => navigate(`/photos/${previousPhotoid}`)}
             />
             <ButtonIcon
               icon={ArrowRightIcon}
               variant="secondary"
               disabled={!nextPhotoId}
-              onClick={() => navigate(`/photo/${nextPhotoId}`)}
+              onClick={() => navigate(`/photos/${nextPhotoId}`)}
             />
           </div>
         </div>
