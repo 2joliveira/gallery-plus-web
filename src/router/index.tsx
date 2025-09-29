@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import { LayoutMain } from "../layouts";
-import { Home, PhotoDetails } from "../pages";
 import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
+import { Albums, Home, PhotoDetails } from "../pages";
+import { LayoutMain } from "../layouts";
 
 export function Router() {
   return (
@@ -11,6 +11,7 @@ export function Router() {
           <Route element={<LayoutMain />}>
             <Route index element={<Home />} />
             <Route path="/photos/:id" element={<PhotoDetails />} />
+            <Route path="/albums" element={<Albums />} />
           </Route>
         </Routes>
       </BrowserRouter>
