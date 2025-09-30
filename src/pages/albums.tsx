@@ -1,3 +1,10 @@
+import { Container } from "@/components";
+import { Albumslist } from "@/contexts/albums/components";
+
 export function Albums() {
-  return <div>Albums Page</div>;
+  return (
+    <Container>
+      <Albumslist />
+    </Container>
+  );
 }
