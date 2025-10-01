@@ -5,7 +5,7 @@ import { PhotoList } from "../contexts/photos/components";
 export function Home() {
   return (
     <Container>
-      <AlbumsFilter className="mb-9" />
+      <AlbumsFilter />
 
       <PhotoList />
     </Container>
