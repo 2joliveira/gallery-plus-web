@@ -30,15 +30,18 @@ export function MainHeader({ className, ...props }: MainHeaderProps) {
       )}
 
       <div className="flex items-center gap-3">
-        <PhotoNewDialog trigger={<Button>Nova foto</Button>} />
-
-        <Button variant="secondary" type="button">
-          <Link to="/albums">Álbuns</Link>
-        </Button>
-
-        <AlbumNewDialog
-          trigger={<Button variant="secondary">Criar álbum</Button>}
-        />
+        {pathname !== "/albums" ? (
+          <>
+            <PhotoNewDialog trigger={<Button>Nova foto</Button>} />
+            <Button variant="secondary" type="button">
+              <Link to="/albums">Álbuns</Link>
+            </Button>
+          </>
+        ) : (
+          <AlbumNewDialog
+            trigger={<Button variant="secondary">Criar álbum</Button>}
+          />
+        )}
       </div>
     </Container>
   );

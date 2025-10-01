@@ -3,7 +3,7 @@ import { Text, Skeleton, Button } from "@/components";
 import { usePhotos, type PhotoResponse } from "../hooks/use-photos";
 
 export function PhotoList() {
-  const { photos, isLoadingPhotos, hasMore, page, setPage } = usePhotos();
+  const { photos, isLoadingPhotos, hasMore, total, page, setPage } = usePhotos();
 
   return (
     <div className="space-y-6">
@@ -14,7 +14,7 @@ export function PhotoList() {
       >
         Total:{" "}
         {!isLoadingPhotos ? (
-          <div>{photos.length}</div>
+          <div>{total}</div>
         ) : (
           <Skeleton className="w-6 h-6" />
         )}

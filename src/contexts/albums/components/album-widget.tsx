@@ -2,6 +2,8 @@ import { Link } from "react-router";
 import { buttonTextVariants, buttonVariants, Text } from "@/components";
 import { Skeleton } from "@/components";
 import type { AlbumResponse } from "../hooks/use-albums-photos";
+import FileImageIcon from "@/assets/icons/image.svg?react";
+import Icon from "@/components/icon";
 
 interface AlbumWidgetProps {
   album: AlbumResponse;
@@ -14,11 +16,20 @@ export function AlbumWidget({ album, loading }: AlbumWidgetProps) {
       {!loading ? (
         <div className="grid grid-cols-2 gap-2">
           {Array.from({ length: 4 }).map((_, index) => (
-            <img
-              key={`index-${index}`}
-              src={album.photos[index]?.url}
-              className="w-20 h-20"
-            />
+            <div key={`photos-${index}`}>
+              {album.photos[index]?.url ? (
+                <img
+                  key={`index-${index}`}
+                  src={album.photos[index]?.url}
+                  className="w-20 h-20"
+                />
+              ) : (
+                <Icon
+                  svg={FileImageIcon}
+                  className="fill-accent-span w-full h-full"
+                />
+              )}
+            </div>
           ))}
         </div>
       ) : (

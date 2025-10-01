@@ -13,5 +13,6 @@ export * from "./input-single-file";
 export * from "./input-text";
 export * from "./main-header";
 export * from "./photos-search";
+export * from "./select";
 export * from "./skeleton";
 export * from "./text";

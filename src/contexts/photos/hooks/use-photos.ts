@@ -15,6 +15,7 @@ export interface PhotoResponse extends Photo {
 interface PhotosResponse {
   photos: PhotoResponse[];
   hasMore: boolean;
+  total: number;
 }
 
 const toSearchParams = createSerializer({
@@ -41,6 +42,7 @@ export function usePhotos() {
   return {
     photos: data?.photos ?? [],
     hasMore: data?.hasMore ?? false,
+    total: data?.total ?? 0,
     isLoadingPhotos: isLoading,
     handling: isFetching,
     page,
