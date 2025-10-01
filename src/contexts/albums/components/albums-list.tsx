@@ -17,7 +17,7 @@ export function Albumslist() {
   return (
     <div className="space-y-6">
       {!isLoadingAlbumsPhotos && albumsPhotos?.length > 0 && (
-        <div className="grid grid-cols-5 gap-9">
+        <div className="grid grid-cols-2 gap-5">
           {albumsPhotos.map((album) => (
             <AlbumWidget
               key={album.id}
@@ -29,8 +29,8 @@ export function Albumslist() {
       )}
 
       {isLoadingAlbumsPhotos && (
-        <div className="grid grid-cols-5 gap-9">
-          {Array.from({ length: 10 }).map((_, index) => (
+        <div className="grid grid-cols-2 gap-5">
+          {Array.from({ length: 4 }).map((_, index) => (
             <AlbumWidget
               key={`album-photo-${index}`}
               album={{} as AlbumResponse}

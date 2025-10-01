@@ -1,8 +1,9 @@
 import * as SelectRadix from "@radix-ui/react-select";
+import { Text } from "./text";
 import Icon from "./icon";
 import ArrowRightIcon from "@/assets/icons/chevron-right.svg?react";
-import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
-import { Text } from "./text";
+import ChevronUpIcon from "@/assets/icons/chevron-up.svg?react";
+import ChevronDownIcon from "@/assets/icons/chevron-down.svg?react";
 
 interface SelectProps {
   value: string;
@@ -20,7 +21,7 @@ export function Select({ value, options, onChange }: SelectProps) {
 
   return (
     <SelectRadix.Root value={value} onValueChange={handleSelect}>
-      <SelectRadix.Trigger className="cursor-pointer flex items-center justify-center p-2">
+      <SelectRadix.Trigger className="cursor-pointer flex items-center justify-center p-2 outline-none">
         <SelectRadix.Value>
           <Text variant="heading-small">{value}</Text>
         </SelectRadix.Value>
@@ -31,9 +32,12 @@ export function Select({ value, options, onChange }: SelectProps) {
       </SelectRadix.Trigger>
 
       <SelectRadix.Portal>
-        <SelectRadix.Content className="overflow-hidden rounded-2xl border border-gray-100 bg-heading shadow-[0px_11px_20px_0px_rgba(0,0,0,0.10)]">
+        <SelectRadix.Content
+          position="popper"
+          className="h-80 overflow-hidden rounded-2xl border border-gray-100 bg-heading shadow-[0px_11px_20px_0px_rgba(0,0,0,0.10)]"
+        >
           <SelectRadix.ScrollUpButton className="flex h-[25px] cursor-default items-center justify-center bg-white text-gray-800">
-            <ChevronUpIcon />
+            <Icon svg={ChevronUpIcon} className="fill-white" />
           </SelectRadix.ScrollUpButton>
 
           <SelectRadix.Viewport className="p-2">
@@ -49,7 +53,7 @@ export function Select({ value, options, onChange }: SelectProps) {
           </SelectRadix.Viewport>
 
           <SelectRadix.ScrollDownButton className="flex h-[25px] cursor-default items-center justify-center bg-white text-gray-800">
-            <ChevronDownIcon />
+            <Icon svg={ChevronDownIcon} className="fill-white" />
           </SelectRadix.ScrollDownButton>
         </SelectRadix.Content>
       </SelectRadix.Portal>
