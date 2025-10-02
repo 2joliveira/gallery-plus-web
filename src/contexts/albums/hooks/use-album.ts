@@ -31,7 +31,21 @@ export function useAlbum(id?: string) {
 
       toast.success("Albúm criado com sucesso!");
     } catch (err) {
-      toast.error(`Erro ao criar álbum: ${err}`);
+      console.error(err);
+      toast.error('Erro ao criar álbum!');
+    }
+  }
+
+  async function updateAlbum(payload: Partial<AlbumNewFormSchema>) {
+    try {
+      await api.put(`albums/${id}`, payload);
+
+      queryClient.invalidateQueries({ queryKey: ["album", id] });
+
+      toast.success("Albúm atualizado com sucesso!");
+    } catch (err) {
+      console.error(err);
+      toast.error('Erro ao atualizar álbum!');
     }
   }
 
@@ -39,5 +53,6 @@ export function useAlbum(id?: string) {
     data,
     isLoading,
     createAlbum,
+    updateAlbum,
   };
 }
