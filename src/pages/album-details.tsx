@@ -1,14 +1,21 @@
 import { ButtonIcon, Container, Skeleton, Text } from "@/components";
+import { useParams } from "react-router";
+import { useAlbum } from "@/contexts/albums/hooks/use-album";
+import { useAlbumPhotos } from "@/contexts/albums/hooks/use-album-photos";
 import PencilIcon from "@/assets/icons/pencil.svg?react";
 import TrashIcon from "@/assets/icons/trash.svg?react";
-import { useAlbum } from "@/contexts/albums/hooks/use-album";
+import { PhotoList } from "@/contexts/photos/components";
 
 export function AlbumDetails() {
-  const { data } = useAlbum();
-  const isLoading = false
+  const { id } = useParams();
+  const { data, isLoading } = useAlbum(id);
+  const { photos, isLoadingPhotos, hasMore, page, setPage, total } =
+    useAlbumPhotos(id);
+
+
   return (
     <Container>
-      <header className="flex items-center justify-between">
+      <header className="flex items-center justify-between mb-4">
         {!isLoading ? (
           <Text as="h2" variant="heading-large">
             {data?.title}
@@ -33,6 +40,15 @@ export function AlbumDetails() {
           />
         </div>
       </header>
+
+      <PhotoList
+        photos={photos}
+        isLoadingPhotos={isLoadingPhotos}
+        hasMore={hasMore}
+        total={total}
+        page={page}
+        setPage={setPage}
+      />
     </Container>
   );
 }
