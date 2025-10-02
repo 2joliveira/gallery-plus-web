@@ -14,17 +14,17 @@ export function AlbumWidget({ album, loading }: AlbumWidgetProps) {
   return (
     <div className="flex flex-col gap-4 p-4 border border-border-primary rounded-2xl ">
       {!loading ? (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2">
           {Array.from({ length: 4 }).map((_, index) => (
             <div
-              className="flex items-center justify-center"
+              className="flex items-center justify-center overflow-hidden"
               key={`photos-${index}`}
             >
               {album.photos[index]?.url ? (
                 <img
                   key={`index-${index}`}
                   src={album.photos[index]?.url}
-                  className="w-24 h-24"
+                  className="w-full h-24 object-cover"
                 />
               ) : (
                 <Icon

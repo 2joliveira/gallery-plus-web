@@ -1,10 +1,17 @@
 import { PhotoWidget } from "./photo-widget";
 import { Text, Skeleton, Button } from "@/components";
-import { usePhotos, type PhotoResponse } from "../hooks/use-photos";
+import { type PhotoResponse } from "../hooks/use-photos";
 
-export function PhotoList() {
-  const { photos, isLoadingPhotos, hasMore, total, page, setPage } = usePhotos();
+interface PhotoListProps {
+  photos: PhotoResponse[];
+  isLoadingPhotos: boolean;
+  hasMore: boolean;
+  total: number;
+  page: number;
+  setPage: (page: number) => void;
+}
 
+export function PhotoList({ photos, isLoadingPhotos, hasMore, total, page, setPage }: PhotoListProps) {
   return (
     <div className="space-y-6">
       <Text
