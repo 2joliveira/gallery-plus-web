@@ -23,7 +23,7 @@ export function AlbumDetails() {
     useForm<AlbumUpdateFormSchema>({
       resolver: zodResolver(albumNewFormSchema),
     });
-  const { data, isLoading, updateAlbum } = useAlbum(id);
+  const { data, isLoading, updateAlbum, deleteAlbum } = useAlbum(id);
   const { photos, isLoadingPhotos, hasMore, page, setPage, total } =
     useAlbumPhotos(id);
 
@@ -41,6 +41,10 @@ export function AlbumDetails() {
   function handleUpdateSubmit(payload: AlbumUpdateFormSchema) {
     updateAlbum(payload);
     setIsEditing(false);
+  }
+
+  function handleDeleteAlbum() {
+    deleteAlbum();
   }
 
   return (
@@ -90,6 +94,7 @@ export function AlbumDetails() {
               icon={TrashIcon}
               className="text-white"
               disabled={isLoading}
+              onClick={handleDeleteAlbum}
             />
           </div>
         )}
