@@ -4,9 +4,11 @@ import { usePhotos } from "@/contexts/photos/hooks/use-photos";
 import { api, fetcher } from "@/utils/api";
 import type { AlbumNewFormSchema } from "../schema";
 import { useAlbumsPhotos } from "./use-albums-photos";
+import { useNavigate } from "react-router";
 
 export function useAlbum(id?: string) {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const {
     page,
     filters: { albumId },
@@ -32,7 +34,7 @@ export function useAlbum(id?: string) {
       toast.success("Albúm criado com sucesso!");
     } catch (err) {
       console.error(err);
-      toast.error('Erro ao criar álbum!');
+      toast.error("Erro ao criar álbum!");
     }
   }
 
@@ -45,7 +47,26 @@ export function useAlbum(id?: string) {
       toast.success("Albúm atualizado com sucesso!");
     } catch (err) {
       console.error(err);
-      toast.error('Erro ao atualizar álbum!');
+      toast.error("Erro ao atualizar álbum!");
+    }
+  }
+
+  async function deleteAlbum() {
+    try {
+      await api.delete(`albums/${id}`);
+
+      queryClient.invalidateQueries({ queryKey: ["albums"] });
+      queryClient.invalidateQueries({
+        queryKey: ["albums_photos", albumsPage],
+      });
+      queryClient.invalidateQueries({ queryKey: ["photos", page, albumId] });
+
+      toast.success("Albúm deletado com sucesso!");
+
+      navigate("/albums");
+    } catch (err) {
+      console.error(err);
+      toast.error("Erro ao deletar álbum!");
     }
   }
 
@@ -54,5 +75,6 @@ export function useAlbum(id?: string) {
     isLoading,
     createAlbum,
     updateAlbum,
+    deleteAlbum,
   };
 }
