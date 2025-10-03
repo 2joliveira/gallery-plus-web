@@ -27,7 +27,7 @@ export function PhotosSearch() {
     <InputText
       icon={SearchIcon}
       placeholder="Buscar imagens"
-      className="flex-1"
+      className="flex-1 w-full"
       value={inputValue}
       onChange={handleInputChange}
     />

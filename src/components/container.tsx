@@ -5,11 +5,12 @@ export const containerVariants = tv({
 	base: "mx-auto",
 	variants: {
 		size: {
+			sm: "w-full px-2",
 			md: "max-w-[62rem] px-2",
 		},
 	},
 	defaultVariants: {
-		size: "md",
+		size: "sm",
 	},
 });
 

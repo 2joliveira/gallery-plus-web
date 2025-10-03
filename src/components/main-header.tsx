@@ -7,15 +7,24 @@ import { PhotosSearch } from "./photos-search";
 import { Divider } from "./divider";
 import { PhotoNewDialog } from "@/contexts/photos/components";
 import { AlbumNewDialog } from "@/contexts/albums/components";
+import { useWindowWidth } from "@/utils/windowWidth";
 
 interface MainHeaderProps extends React.ComponentProps<"div"> {}
 
 export function MainHeader({ className, ...props }: MainHeaderProps) {
   const { pathname } = useLocation();
+  const { ref, windowWidth } = useWindowWidth();
+
+  console.log({ windowWidth });
+
   return (
     <Container
+      ref={ref}
       as="header"
-      className={cn(`flex justify-between items-center gap-10`, className)}
+      className={cn(
+        `flex flex-col sm:flex-row justify-between items-center gap-5`,
+        className
+      )}
       {...props}
     >
       <Link to="/">
@@ -25,21 +34,29 @@ export function MainHeader({ className, ...props }: MainHeaderProps) {
       {pathname === "/" && (
         <>
           <PhotosSearch />
-          <Divider orientation="vertical" className="h-10" />
+          {windowWidth > 650 && (
+            <Divider orientation="vertical" className="h-10" />
+          )}
         </>
       )}
 
-      <div className="flex items-center gap-3">
+      <div className="flex w-full sm:w-60 items-center gap-3">
         {pathname !== "/albums" ? (
           <>
-            <PhotoNewDialog trigger={<Button>Nova foto</Button>} />
-            <Button variant="secondary" type="button">
+            <PhotoNewDialog
+              trigger={<Button className="w-full">Nova foto</Button>}
+            />
+            <Button className="w-full" variant="secondary" type="button">
               <Link to="/albums">Álbuns</Link>
             </Button>
           </>
         ) : (
           <AlbumNewDialog
-            trigger={<Button variant="secondary">Criar álbum</Button>}
+            trigger={
+              <Button className="w-full" variant="secondary">
+                Criar álbum
+              </Button>
+            }
           />
         )}
       </div>
