@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 
 export const imagePreviewVariants = tv({
   base: `
-    rounded-lg overflow-hidden
+    rounded-lg overflow-hidden flex items-center justify-center
   `,
 });
 

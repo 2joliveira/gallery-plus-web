@@ -13,7 +13,7 @@ interface PhotoListProps {
 
 export function PhotoList({ photos, isLoadingPhotos, hasMore, total, page, setPage }: PhotoListProps) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       <Text
         as="div"
         variant="paragraph-large"
@@ -28,7 +28,7 @@ export function PhotoList({ photos, isLoadingPhotos, hasMore, total, page, setPa
       </Text>
 
       {!isLoadingPhotos && photos?.length > 0 && (
-        <div className="grid grid-cols-5 gap-9">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-9">
           {photos.map((photo) => (
             <PhotoWidget key={photo.id} photo={photo} />
           ))}
@@ -36,7 +36,7 @@ export function PhotoList({ photos, isLoadingPhotos, hasMore, total, page, setPa
       )}
 
       {isLoadingPhotos && (
-        <div className="grid grid-cols-5 gap-9">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-9">
           {Array.from({ length: 10 }).map((_, index) => (
             <PhotoWidget
               key={`photo-loading-${index}`}
