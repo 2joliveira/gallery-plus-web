@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ButtonIcon, Container, InputText, Skeleton, Text } from "@/components";
 import { useAlbum } from "@/contexts/albums/hooks/use-album";
-import { useAlbumPhotos } from "@/contexts/albums/hooks/use-album-photos";
 import { PhotoList } from "@/contexts/photos/components";
 import {
   albumNewFormSchema,
@@ -14,6 +13,7 @@ import PencilIcon from "@/assets/icons/pencil.svg?react";
 import TrashIcon from "@/assets/icons/trash.svg?react";
 import CheckIcon from "@/assets/icons/check.svg?react";
 import XIcon from "@/assets/icons/x.svg?react";
+import { usePhotos } from "@/contexts/photos/hooks/use-photos";
 
 interface AlbumUpdateFormSchema extends Omit<AlbumNewFormSchema, "photosIds"> {}
 
@@ -25,7 +25,7 @@ export function AlbumDetails() {
     });
   const { data, isLoading, updateAlbum, deleteAlbum } = useAlbum(id);
   const { photos, isLoadingPhotos, hasMore, page, setPage, total } =
-    useAlbumPhotos(id);
+    usePhotos(id);
 
   const [isEditing, setIsEditing] = useState(false);
 

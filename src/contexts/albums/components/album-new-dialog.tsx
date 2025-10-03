@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
+  ButtonIcon,
   Dialog,
   DialogBody,
   DialogClose,
@@ -15,10 +16,12 @@ import {
   Text,
 } from "@/components";
 import { PhotoSelectable } from "@/contexts/photos/components";
-import { usePhotos } from "@/contexts/photos/hooks/use-photos";
-import { albumNewFormSchema, type AlbumNewFormSchema } from "../schema";
-import SelectCheckboxIlustration from "@/assets/images/select-checkbox.svg?react";
 import { useAlbum } from "../hooks/use-album";
+import { albumNewFormSchema, type AlbumNewFormSchema } from "../schema";
+import ChevronRightIcon from "@/assets/icons/chevron-right.svg?react";
+import ChevronLeftIcon from "@/assets/icons/chevron-left.svg?react";
+import SelectCheckboxIlustration from "@/assets/images/select-checkbox.svg?react";
+import { usePhotos } from "@/contexts/photos/hooks/use-photos";
 
 interface AlbumNewDialogProps {
   trigger: React.ReactNode;
@@ -27,15 +30,18 @@ interface AlbumNewDialogProps {
 export function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
   const { createAlbum } = useAlbum();
   const [isCreatingAlbum, setIsCreatingAlbum] = useTransition();
-  const { photos, isLoadingPhotos } = usePhotos();
+  const { photos, isLoadingPhotos, setPage, hasMore, page } = usePhotos();
   const [modalOpen, setModalOpen] = useState(false);
   const form = useForm<AlbumNewFormSchema>({
     resolver: zodResolver(albumNewFormSchema),
   });
 
   useEffect(() => {
-    if (!modalOpen) form.reset();
-  }, [modalOpen, form]);
+    if (!modalOpen) {
+      form.reset();
+      setPage(1);
+    }
+  }, [modalOpen, form, setPage]);
 
   function handleTogglePhoto(selected: boolean, photoId: string) {
     const photosIds = form.getValues("photosIds") || [];
@@ -72,24 +78,47 @@ export function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
               {...form.register("title")}
             />
 
-            <div className="space-y-3">
+            <div className="flex flex-col space-y-3">
               <Text as="div" variant="label-small">
                 Fotos cadastradas
               </Text>
 
               {!isLoadingPhotos && photos.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {photos.map((photo) => (
-                    <PhotoSelectable
-                      key={photo.id}
-                      src={photo.url}
-                      title={photo.title}
-                      imageClassName="w-20 h-20"
-                      onSelectimage={(selected) =>
-                        handleTogglePhoto(selected, photo.id)
-                      }
-                    />
-                  ))}
+                <div className="flex items-center justify-between space-x-1">
+                  <ButtonIcon
+                    type="button"
+                    variant="secondary"
+                    icon={ChevronLeftIcon}
+                    className="w-7 p-0 h-45"
+                    onClick={() => setPage(page - 1)}
+                    disabled={page === 1}
+                  />
+
+                  <div className="flex flex-wrap gap-1 items-center justify-center">
+                    {photos.map((photo) => (
+                      <PhotoSelectable
+                        key={photo.id}
+                        src={photo.url}
+                        title={photo.title}
+                        imageClassName="w-19 h-19"
+                        selected={form
+                          .getValues("photosIds")
+                          ?.includes(photo.id)}
+                        onSelectimage={(selected) =>
+                          handleTogglePhoto(selected, photo.id)
+                        }
+                      />
+                    ))}
+                  </div>
+
+                  <ButtonIcon
+                    type="button"
+                    variant="secondary"
+                    icon={ChevronRightIcon}
+                    className="w-7 p-0 h-45"
+                    onClick={() => setPage(page + 1)}
+                    disabled={!hasMore}
+                  />
                 </div>
               )}
 

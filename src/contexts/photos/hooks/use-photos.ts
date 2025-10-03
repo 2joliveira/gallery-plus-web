@@ -12,7 +12,7 @@ export interface PhotoResponse extends Photo {
   url: string;
 }
 
-interface PhotosResponse {
+export interface PhotosResponse {
   photos: PhotoResponse[];
   hasMore: boolean;
   total: number;
@@ -24,13 +24,17 @@ const toSearchParams = createSerializer({
   q: parseAsString,
 });
 
-export function usePhotos() {
+export function usePhotos(selectedAlbumId?: string) {
   const [page, setPage] = useQueryState("page", {
     defaultValue: 1,
     parse: Number,
     serialize: String,
   });
-  const [albumId, setAlbumId] = useQueryState("albumId");
+  const [albumId, setAlbumId] = useQueryState("albumId", {
+    defaultValue: selectedAlbumId ?? null,
+    parse: String,
+    serialize: String,
+  });
   const [q, setQ] = useQueryState("q");
 
   const { data, isFetching, isLoading } = useQuery<PhotosResponse>({
