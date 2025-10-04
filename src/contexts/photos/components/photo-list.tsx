@@ -1,6 +1,7 @@
 import { PhotoWidget } from "./photo-widget";
 import { Text, Skeleton, Button } from "@/components";
 import { type PhotoResponse } from "../hooks/use-photos";
+import { useWindowWidth } from "@/utils/windowWidth";
 
 interface PhotoListProps {
   photos: PhotoResponse[];
@@ -11,9 +12,18 @@ interface PhotoListProps {
   setPage: (page: number) => void;
 }
 
-export function PhotoList({ photos, isLoadingPhotos, hasMore, total, page, setPage }: PhotoListProps) {
+export function PhotoList({
+  photos,
+  isLoadingPhotos,
+  hasMore,
+  total,
+  page,
+  setPage,
+}: PhotoListProps) {
+  const { ref, windowWidth } = useWindowWidth();
+
   return (
-    <div className="space-y-6 w-full">
+    <div ref={ref} className="space-y-6 w-full">
       <Text
         as="div"
         variant="paragraph-large"
@@ -28,20 +38,25 @@ export function PhotoList({ photos, isLoadingPhotos, hasMore, total, page, setPa
       </Text>
 
       {!isLoadingPhotos && photos?.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-9">
+        <div className="flex flex-wrap items-center justify-center gap-5">
           {photos.map((photo) => (
-            <PhotoWidget key={photo.id} photo={photo} />
+            <PhotoWidget
+              key={photo.id}
+              photo={photo}
+              windowWidth={windowWidth}
+            />
           ))}
         </div>
       )}
 
       {isLoadingPhotos && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-9">
+        <div className="flex flex-wrap items-center justify-center gap-5">
           {Array.from({ length: 10 }).map((_, index) => (
             <PhotoWidget
               key={`photo-loading-${index}`}
               photo={{} as PhotoResponse}
               loading
+              windowWidth={windowWidth}
             />
           ))}
         </div>

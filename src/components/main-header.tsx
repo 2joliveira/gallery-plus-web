@@ -15,8 +15,6 @@ export function MainHeader({ className, ...props }: MainHeaderProps) {
   const { pathname } = useLocation();
   const { ref, windowWidth } = useWindowWidth();
 
-  console.log({ windowWidth });
-
   return (
     <Container
       ref={ref}

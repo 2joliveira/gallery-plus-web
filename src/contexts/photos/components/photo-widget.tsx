@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import cn from "classnames";
 import {
   buttonTextVariants,
   buttonVariants,
@@ -11,11 +12,12 @@ import type { PhotoResponse } from "../hooks/use-photos";
 interface PhotoWidgetProps {
   photo: PhotoResponse;
   loading?: boolean;
+  windowWidth: number;
 }
 
-export function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
+export function PhotoWidget({ photo, loading, windowWidth }: PhotoWidgetProps) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className={cn("flex flex-col gap-4", windowWidth <= 398 && "w-full")}>
       {!loading ? (
         <ImagePreview
           src={photo.url}
