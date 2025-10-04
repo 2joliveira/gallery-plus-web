@@ -34,7 +34,7 @@ export function Select({ value, options, onChange }: SelectProps) {
       <SelectRadix.Portal>
         <SelectRadix.Content
           position="popper"
-          className="h-80 overflow-hidden rounded-2xl border border-gray-100 bg-heading shadow-[0px_11px_20px_0px_rgba(0,0,0,0.10)]"
+          className="max-h-80 overflow-hidden rounded-2xl border border-gray-100 bg-heading shadow-[0px_11px_20px_0px_rgba(0,0,0,0.10)]"
         >
           <SelectRadix.ScrollUpButton className="flex h-[25px] cursor-default items-center justify-center bg-white text-gray-800">
             <Icon svg={ChevronUpIcon} className="fill-white" />

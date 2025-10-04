@@ -59,21 +59,30 @@ export function AlbumDetails() {
         {!isLoading && isEditing && (
           <form
             onSubmit={handleSubmit(handleUpdateSubmit)}
-            className="flex items-center gap-2"
+            className="flex flex-col sm:flex-row w-full items-center gap-2"
           >
             <InputText
+              className="w-full sm:w-80"
               placeholder="Digite o novo título"
               error={formState.errors.title?.message}
               {...register("title")}
             />
 
-            <ButtonIcon
-              type="button"
-              variant="destructive"
-              icon={XIcon}
-              onClick={handeCancelEditAlbum}
-            />
-            <ButtonIcon type="submit" variant="secondary" icon={CheckIcon} />
+            <div className="flex w-full gap-2">
+              <ButtonIcon
+                className="w-full sm:w-10"
+                type="button"
+                variant="destructive"
+                icon={XIcon}
+                onClick={handeCancelEditAlbum}
+              />
+              <ButtonIcon
+                className="w-full sm:w-10"
+                type="submit"
+                variant="secondary"
+                icon={CheckIcon}
+              />
+            </div>
           </form>
         )}
 

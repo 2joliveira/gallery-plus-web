@@ -40,7 +40,7 @@ export function usePhotos(selectedAlbumId?: string) {
   const { data, isFetching, isLoading } = useQuery<PhotosResponse>({
     queryKey: ["photos", page, albumId, q],
     queryFn: () => fetcher(`/photos${toSearchParams({ page, albumId, q })}`),
-    staleTime: 10000,
+    staleTime: 300000, // 5 minutes
   });
 
   return {
