@@ -22,6 +22,7 @@ import ChevronRightIcon from "@/assets/icons/chevron-right.svg?react";
 import ChevronLeftIcon from "@/assets/icons/chevron-left.svg?react";
 import SelectCheckboxIlustration from "@/assets/images/select-checkbox.svg?react";
 import { usePhotos } from "@/contexts/photos/hooks/use-photos";
+import { useWindowWidth } from "@/utils/windowWidth";
 
 interface AlbumNewDialogProps {
   trigger: React.ReactNode;
@@ -63,33 +64,37 @@ export function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
     });
   }
 
+  const { ref, windowWidth } = useWindowWidth();
+
+  console.log(windowWidth);
+
   return (
     <Dialog open={modalOpen} onOpenChange={setModalOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
 
-      <DialogContent>
+      <DialogContent className="p-2">
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <DialogHeader>Criar álbum</DialogHeader>
 
-          <DialogBody className="flex flex-col gap-5">
+          <DialogBody ref={ref} className="flex flex-col gap-5">
             <InputText
               placeholder="Adicione um título"
               error={form.formState.errors.title?.message}
               {...form.register("title")}
             />
 
-            <div className="flex flex-col space-y-3">
+            <div className="flex items-stretch flex-col space-y-3">
               <Text as="div" variant="label-small">
                 Fotos cadastradas
               </Text>
 
               {!isLoadingPhotos && photos.length > 0 && (
-                <div className="flex items-center justify-between space-x-1">
+                <div className="flex w-full items-stretch justify-between space-x-1">
                   <ButtonIcon
                     type="button"
                     variant="secondary"
                     icon={ChevronLeftIcon}
-                    className="w-7 p-0 h-45"
+                    className="w-5 p-0 self-stretch"
                     onClick={() => setPage(page - 1)}
                     disabled={page === 1}
                   />
@@ -115,7 +120,7 @@ export function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
                     type="button"
                     variant="secondary"
                     icon={ChevronRightIcon}
-                    className="w-7 p-0 h-45"
+                    className="w-5 p-0 self-stretch"
                     onClick={() => setPage(page + 1)}
                     disabled={!hasMore}
                   />

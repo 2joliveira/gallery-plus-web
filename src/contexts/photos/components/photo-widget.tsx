@@ -22,7 +22,7 @@ export function PhotoWidget({ photo, loading, windowWidth }: PhotoWidgetProps) {
         <ImagePreview
           src={photo.url}
           title={photo.title}
-          imageClassName="w-[10.875rem] h-[10.875rem]"
+          imageClassName={cn("w-[10.875rem] h-[10.875rem]", windowWidth <= 398 && "w-full")}
         />
       ) : (
         <Skeleton className="w-[10.875rem] h-[10.875rem] rounded-lg" />
