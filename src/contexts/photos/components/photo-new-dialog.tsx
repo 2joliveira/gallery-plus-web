@@ -72,7 +72,7 @@ export function PhotoNewDialog({ trigger }: PhotoNewDialogProps) {
   return (
     <Dialog open={modalOpen} onOpenChange={setModalOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="p-2">
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <DialogHeader>Adicionar foto</DialogHeader>
 
