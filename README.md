@@ -19,8 +19,8 @@ O projeto oferece uma experiência responsiva e intuitiva para visualizar, busca
 - [TypeScript](https://www.typescriptlang.org/)
 - [Vite](https://vitejs.dev/)
 - [React Query](https://tanstack.com/query/latest)
-- [nuqs](https://github.com/47ng/nuqs) (gerenciamento de query string)
-- [Tailwind CSS](https://tailwindcss.com/) (presumido pelo uso de classes utilitárias)
+- [nuqs](https://github.com/47ng/nuqs)
+- [Tailwind CSS](https://tailwindcss.com/)
 
 ## Estrutura do Projeto
 
