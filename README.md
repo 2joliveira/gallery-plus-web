@@ -1,11 +1,11 @@
 # Gallery Plus Web
 
-Gallery Plus Web é uma aplicação moderna de galeria de fotos desenvolvida utilizando React + TypeScript, criada com Vite para desenvolvimento rápido, TanStack Query (React Query) para gerenciamento de dados assíncronos e nuqs para gerenciar o estado dos parâmetros de pesquisa com uma tipagem segura.
+Gallery Plus Web é uma aplicação moderna de galeria de fotos desenvolvida utilizando React + TypeScript, criada com Vite para desenvolvimento rápido, TanStack Query (React Query) para gerenciamento de dados assíncronos e nuqs para gerenciar o estado dos search params com uma tipagem segura.
 O projeto oferece uma experiência responsiva e intuitiva para visualizar, buscar, filtrar, navegar e gerenciar fotos e álbuns, combinando performance, usabilidade e design contemporâneo.
 
 ## Funcionalidades
 
-- Visualização de fotos em diferentes formatos (quadrado, retrato, paisagem)
+- Visualização de fotos
 - Busca e filtro de fotos por nome e por álbum
 - Paginação de fotos
 - Criação de novos álbuns e upload de fotos
