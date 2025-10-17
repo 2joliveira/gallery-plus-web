@@ -1,5 +1,10 @@
 import { Link } from "react-router";
-import { buttonTextVariants, buttonVariants, Divider, Text } from "@/components";
+import {
+  buttonTextVariants,
+  buttonVariants,
+  Divider,
+  Text,
+} from "@/components";
 import { Skeleton } from "@/components";
 import type { AlbumResponse } from "../hooks/use-albums-photos";
 import FileImageIcon from "@/assets/icons/image.svg?react";
@@ -36,9 +41,18 @@ export function AlbumWidget({ album, loading }: AlbumWidgetProps) {
           ))}
         </div>
       ) : (
-        <Skeleton className="w-20 h-20 rounded-lg" />
+        <div className="grid grid-cols-2">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div className="m-2">
+              <Skeleton
+                key={`skeleton_${index}`}
+                className="w-full h-24 rounded-lg"
+              />
+            </div>
+          ))}
+        </div>
       )}
-      
+
       <Divider />
 
       <div className="flex flex-col gap-2">
