@@ -64,9 +64,7 @@ export function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
     });
   }
 
-  const { ref, windowWidth } = useWindowWidth();
-
-  console.log(windowWidth);
+  const { ref } = useWindowWidth();
 
   return (
     <Dialog open={modalOpen} onOpenChange={setModalOpen}>

@@ -25,7 +25,7 @@ export function PhotoWidget({ photo, loading, windowWidth }: PhotoWidgetProps) {
           imageClassName={cn("w-[10.875rem] h-[10.875rem]", windowWidth <= 398 && "w-full")}
         />
       ) : (
-        <Skeleton className="w-[10.875rem] h-[10.875rem] rounded-lg" />
+        <Skeleton className={cn("w-[10.875rem] h-[10.875rem] rounded-lg", windowWidth <= 398 && "w-full")} />
       )}
 
       <div className="flex flex-col gap-2">
